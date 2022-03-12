@@ -46,4 +46,12 @@ public class FacultyServiceImpl implements FacultyService {
         return getAllFaculty().stream()
                 .collect(Collectors.groupingBy(Faculty::getColor));
     }
+
+    @Override
+    public List<Faculty> getFacultyFor(String color) {
+        return getAllFaculty().stream()
+                    .filter(student -> student.isByColor(color))
+                    .collect(Collectors.toList());
+
+    }
 }

@@ -20,5 +20,7 @@ public interface StudentService {
 
     Collection<Student> getAllStudent();
 
-    Map<String, List<Student>> findStudentByAge(String age);
+    Collection<Student> getStudentsFor(Integer age);
+
+    Map<Integer, List<Student>> findStudentByAge();
 }

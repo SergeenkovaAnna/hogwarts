@@ -30,8 +30,16 @@ public class StudentServiceImpl implements StudentService {
         return students.get(id);
     }
 
+
     @Override
-    public Map<String, List<Student>> findStudentByAge(String age) {
+    public Collection<Student> getStudentsFor(Integer age) {
+        return getAllStudent().stream()
+                .filter(student -> student.isByAge(age))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<Integer, List<Student>> findStudentByAge() {
         return getAllStudent().stream()
                 .collect(Collectors.groupingBy(Student::getAge));
     }

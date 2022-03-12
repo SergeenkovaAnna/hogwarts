@@ -29,6 +29,13 @@ public class Faculty {
         this.name = name;
     }
 
+    public boolean isByColor(String color) {
+        if (this.color != color) {
+            return false;
+        }
+        return true;
+    }
+
     public String getColor() {
         return color;
     }

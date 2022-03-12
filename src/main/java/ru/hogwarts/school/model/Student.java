@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Student {
     private Long id;
     private String name;
-    private String age;
+    private Integer age;
 
-    public Student(Long id, String name, String age) {
+    public Student(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -29,12 +29,19 @@ public class Student {
         this.name = name;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public boolean isByAge(Integer age) {
+        if (this.age != age) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -7,8 +7,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("faculty")
@@ -55,7 +53,7 @@ public class FacultyController {
 
     @GetMapping(value = "/color", params = {"color"})
     public ResponseEntity<Collection<Faculty>> getAllFacultyByColor(@RequestParam String color) {
-       return ResponseEntity.ok((Collection<Faculty>) facultyService.getFacultyFor(color));
+       return ResponseEntity.ok((Collection<Faculty>) facultyService.getFacultyByColor(color));
     }
 
 

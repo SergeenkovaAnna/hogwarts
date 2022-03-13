@@ -18,8 +18,8 @@ public interface FacultyService {
 
     Collection<Faculty> getAllFaculty();
 
-    Map<String, List<Faculty>> findFacultyByColor(String color);
+//    Map<String, List<Faculty>> findFacultyByColor(String color);
 
-    List<Faculty> getFacultyFor(String color);
+    List<Faculty> getFacultyByColor(String color);
 
 }

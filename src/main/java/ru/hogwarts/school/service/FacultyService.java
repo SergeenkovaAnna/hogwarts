@@ -10,7 +10,7 @@ public interface FacultyService {
 
     Faculty addFaculty(Faculty faculty);
 
-    Faculty removeFaculty(Long id);
+    void removeFaculty(Long id);
 
     Faculty findFaculty(Long id);
 

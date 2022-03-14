@@ -50,7 +50,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public List<Faculty> getFacultyByColor(String color) {
         return getAllFaculty().stream()
-                    .filter(student -> student.isByColor(color))
+                    .filter(faculty -> faculty.isByColor(color))
                     .collect(Collectors.toList());
 
     }

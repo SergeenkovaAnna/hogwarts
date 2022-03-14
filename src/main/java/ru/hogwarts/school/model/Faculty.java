@@ -43,10 +43,7 @@ public class Faculty {
     }
 
     public boolean isByColor(String color) {
-        if (this.color != color) {
-            return false;
-        }
-        return true;
+        return this.color.equals(color);
     }
 
     public String getColor() {

@@ -42,16 +42,16 @@ public class FacultyServiceImpl implements FacultyService {
         return facultyRepository.findAll();
     }
 
-    @Override
-    public Map<String, List<Faculty>> findFacultyByColor(String color) {
-        return getAllFaculty().stream()
-                .collect(Collectors.groupingBy(Faculty::getColor));
-    }
+//    @Override
+//    public Map<String, List<Faculty>> findFacultyByColor(String color) {
+//        return getAllFaculty().stream()
+//                .collect(Collectors.groupingBy(Faculty::getColor));
+//    }
 
     @Override
-    public List<Faculty> getFacultyFor(String color) {
+    public List<Faculty> getFacultyForColor(String color) {
         return getAllFaculty().stream()
-                    .filter(student -> student.isByColor(color))
+                    .filter(faculty -> faculty.isByColor(color))
                     .collect(Collectors.toList());
 
     }

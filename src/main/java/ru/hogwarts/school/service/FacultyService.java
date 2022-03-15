@@ -22,4 +22,6 @@ public interface FacultyService {
 
     List<Faculty> getFacultyByColor(String color);
 
+    Faculty findFacultyByNameIgnoreCase(String name);
+
 }

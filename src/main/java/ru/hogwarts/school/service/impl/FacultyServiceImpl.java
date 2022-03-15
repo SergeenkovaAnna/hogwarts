@@ -55,4 +55,9 @@ public class FacultyServiceImpl implements FacultyService {
                     .collect(Collectors.toList());
 
     }
+
+    @Override
+    public Faculty findFacultyByNameIgnoreCase(String name) {
+        return facultyRepository.findFacultyByNameIgnoreCase(name);
+    }
 }

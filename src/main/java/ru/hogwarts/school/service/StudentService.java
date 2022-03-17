@@ -23,4 +23,6 @@ public interface StudentService {
     Collection<Student> getStudentsFor(Integer age);
 
     Map<Integer, List<Student>> findStudentByAge();
+
+    Collection<Student> findByAgeBetween(Integer min, Integer max);
 }

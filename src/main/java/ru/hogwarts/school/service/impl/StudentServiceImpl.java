@@ -48,6 +48,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Collection<Student> findByAgeBetween(Integer min, Integer max) {
+        return studentRepository.findByAgeBetween(min, max);
+    }
+
+    @Override
     public Student editStudent(Student student) {
         return studentRepository.save(student);
     }

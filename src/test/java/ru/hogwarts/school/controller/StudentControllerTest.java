@@ -44,7 +44,7 @@ public class StudentControllerTest {
 //    @Test
 //    public void testGetStudents() throws Exception {
 //        Assertions
-//                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/{id}" + , Student.class))
+//                .assertArrayEquals(this.restTemplate.getForObject("http://localhost:" + port + "/student", Student.class))
 //                .isNotNull();
 //    }
 
@@ -61,7 +61,7 @@ public class StudentControllerTest {
 
 
     private Student getStudentById() {
-        return this.restTemplate.getForObject("http://localhost:" + port + "/student/{id}", Student.class, ID);
+        return this.restTemplate.getForObject("http://localhost:" + port + "/student/id/{id}", Student.class, ID);
 
     }
 
@@ -73,6 +73,14 @@ public class StudentControllerTest {
         Student afterEdit = getStudentById();
         Assertions
                 .assertThat(afterEdit).isEqualTo(studentBeforeEdit);
+    }
+
+    @Test
+    public void testGetAllStudents() throws Exception {
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port, Student.class))
+                .isNotNull();
+
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import ru.hogwarts.school.model.Student;
 
+import java.util.ArrayList;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,12 +42,13 @@ public class StudentControllerTest {
                 .isNotNull();
     }
 
-//    @Test
-//    public void testGetStudents() throws Exception {
-//        Assertions
-//                .assertArrayEquals(this.restTemplate.getForObject("http://localhost:" + port + "/student", Student.class))
-//                .isNotNull();
-//    }
+    @Test
+    public void testGetStudents() throws Exception {
+        init();
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", Student.class))
+                .isEqualTo(STUDENT);
+    }
 
     @Test
     public void testDeleteStudent() throws Exception {
@@ -82,5 +84,22 @@ public class StudentControllerTest {
                 .isNotNull();
 
     }
+
+    @Test
+    public void testFindStudentByAgeBetween() throws Exception {
+        init();
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/ageBetween" + "?min=" + 20 + "&max=" + 30, ArrayList.class).size())
+                .isGreaterThan(0);
+    }
+
+    @Test
+    public void testGetStudentByAge() throws Exception {
+
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/age/", Student.class))
+                .isNotNull();
+    }
+
 
 }

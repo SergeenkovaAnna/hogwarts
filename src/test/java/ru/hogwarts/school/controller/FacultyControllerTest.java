@@ -145,15 +145,14 @@ public class FacultyControllerTest {
 
     @Test
     public void getAllFacultyByColorTest() throws Exception {
-        when(facultyRepository.getFacultyByColor(anyString())).thenReturn(faculties);
+        when(facultyRepository.getAllFacultyByColor(anyString())).thenReturn(faculty);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/?color=" + COLOR)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[*]").exists())
-                .andExpect(jsonPath("$.[*].id").isNotEmpty())
-                .andExpect(jsonPath("$.[*].name").isNotEmpty())
-                .andExpect(jsonPath("$.[*].color").isNotEmpty());
+                .andExpect(jsonPath("$.ID").value(ID))
+                .andExpect(jsonPath("$.NAME").value(NAME))
+                .andExpect(jsonPath("$.COLOR").value(COLOR));
     }
 
 

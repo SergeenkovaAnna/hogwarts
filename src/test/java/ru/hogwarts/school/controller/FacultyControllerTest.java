@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -145,14 +146,14 @@ public class FacultyControllerTest {
 
     @Test
     public void getAllFacultyByColorTest() throws Exception {
-        when(facultyRepository.getAllFacultyByColor(anyString())).thenReturn(faculty);
+        when(facultyRepository.getAllFacultyByColor(anyString())).thenReturn((Faculty) faculties);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/?color=" + COLOR)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.ID").value(ID))
-                .andExpect(jsonPath("$.NAME").value(NAME))
-                .andExpect(jsonPath("$.COLOR").value(COLOR));
+                .andExpect(jsonPath("$.id").value(Lists.newArrayList(ID)))
+                .andExpect(jsonPath("$.name").value(Lists.newArrayList(NAME)))
+                .andExpect(jsonPath("$.color").value(Lists.newArrayList(COLOR)));
     }
 
 

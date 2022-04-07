@@ -17,8 +17,7 @@ import ru.hogwarts.school.repository.FacultyRepository;
 
 import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -30,6 +29,7 @@ import static ru.hogwarts.school.ConstantsForTests.*;
 
 @WebMvcTest(controllers = FacultyController.class)
 public class FacultyControllerTest {
+
 
     private Faculty faculty;
     private Faculty faculty2;
@@ -52,6 +52,7 @@ public class FacultyControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+
         facultyObject = new JSONObject();
         facultyObject.put("name", NAME);
         facultyObject.put("color", COLOR);
@@ -67,7 +68,7 @@ public class FacultyControllerTest {
         faculty2.setId(ID_2);
         faculty2.setColor(COLOR_2);
 
-        faculties = Set.of(faculty, faculty2);
+        faculties = new HashSet<Faculty>(Set.of(faculty, faculty2));
 
     }
 
@@ -139,21 +140,25 @@ public class FacultyControllerTest {
                         .get("/faculty/?name=" + NAME)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[*].id").value(ID))
-                .andExpect(jsonPath("$.[*].name").value(NAME))
-                .andExpect(jsonPath("$.[*].color").value(COLOR));
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.color").value(COLOR));
     }
 
     @Test
     public void getAllFacultyByColorTest() throws Exception {
-        when(facultyRepository.getAllFacultyByColor(anyString())).thenReturn((Faculty) faculties);
+
+        when(facultyRepository.getAllFacultyByColor(any(String.class))).thenReturn(List.of(faculty, faculty2));
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/?color=" + COLOR)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(Lists.newArrayList(ID)))
-                .andExpect(jsonPath("$.name").value(Lists.newArrayList(NAME)))
-                .andExpect(jsonPath("$.color").value(Lists.newArrayList(COLOR)));
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.color").value(COLOR));
+//                .andExpect(jsonPath("$.id").value(Lists.newArrayList(ID)))
+//                .andExpect(jsonPath("$.name").value(Lists.newArrayList(NAME)))
+//                .andExpect(jsonPath("$.color").value(Lists.newArrayList(COLOR)));
     }
 
 

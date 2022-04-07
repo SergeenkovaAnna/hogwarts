@@ -18,6 +18,7 @@ public class StudentControllerTest {
     private int port;
 
     private static final int ID = 1;
+    private long studentId;
 
     private static final Student STUDENT = new Student();
 
@@ -31,7 +32,8 @@ public class StudentControllerTest {
     @BeforeAll
     public static void init() {
         STUDENT.setName("Ann");
-        STUDENT.setAge(12);
+        STUDENT.setAge(25);
+        STUDENT.setId(1L);
     }
 
     @Test
@@ -46,7 +48,10 @@ public class StudentControllerTest {
     public void testGetStudents() throws Exception {
         init();
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student", Student.class))
+                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", STUDENT, Student.class))
+                .isNotNull();
+        Assertions.
+                assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + STUDENT, Student.class))
                 .isEqualTo(STUDENT);
     }
 
@@ -89,7 +94,10 @@ public class StudentControllerTest {
     public void testFindStudentByAgeBetween() throws Exception {
         init();
         Assertions
-                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/ageBetween" + "?min=" + 20 + "&max=" + 30, ArrayList.class).size())
+                .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", STUDENT, Student.class))
+                .isNotNull();
+        Assertions
+                .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/ageBetween/" + "?min=" + 20 + "&max=" + 30, ArrayList.class).size())
                 .isGreaterThan(0);
     }
 

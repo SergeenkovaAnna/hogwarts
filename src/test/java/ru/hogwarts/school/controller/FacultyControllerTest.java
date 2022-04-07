@@ -1,6 +1,6 @@
 package ru.hogwarts.school.controller;
 
-import org.assertj.core.util.Lists;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +20,8 @@ import ru.hogwarts.school.service.impl.FacultyServiceImpl;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static ru.hogwarts.school.ConstantsForTests.*;
 
 
@@ -135,9 +133,13 @@ public class FacultyControllerTest {
 
     @Test
     public void findFacultyByNameTest() throws Exception {
-        when(facultyRepository.findFacultyByNameIgnoreCase(any(String.class))).thenReturn(faculty);
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of((faculty)));
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/?name=" + NAME)
+                        .post("/faculty/")
+                        .param("name", NAME)
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID))
@@ -148,18 +150,32 @@ public class FacultyControllerTest {
     @Test
     public void getAllFacultyByColorTest() throws Exception {
 
-        when(facultyRepository.getAllFacultyByColor(any(String.class))).thenReturn(List.of(faculty, faculty2));
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of((faculty)));
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/?color=" + COLOR)
+                        .post("/faculty")
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.color").value(COLOR));
-//                .andExpect(jsonPath("$.id").value(Lists.newArrayList(ID)))
-//                .andExpect(jsonPath("$.name").value(Lists.newArrayList(NAME)))
-//                .andExpect(jsonPath("$.color").value(Lists.newArrayList(COLOR)));
     }
 
+    @Test
+    public void getAllFacultiesTest() throws Exception {
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of((faculty)));
 
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/faculty")
+                .content(facultyObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.color").value(COLOR));
+    }
 }

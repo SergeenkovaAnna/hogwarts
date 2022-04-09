@@ -18,7 +18,7 @@ public class StudentControllerTest {
     private int port;
 
     private static final int ID = 1;
-    private long studentId;
+
 
     private static final Student STUDENT = new Student();
 
@@ -50,8 +50,8 @@ public class StudentControllerTest {
         Assertions
                 .assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/student", STUDENT, Student.class))
                 .isNotNull();
-        Assertions.
-                assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/" + STUDENT, Student.class))
+        Assertions
+         .assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/student/id/{id}", Student.class, ID))
                 .isEqualTo(STUDENT);
     }
 

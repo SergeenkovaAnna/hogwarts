@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public interface AvatarService {
 
@@ -11,4 +12,5 @@ public interface AvatarService {
 
     Avatar findAvatar(Long studentId);
 
+    Collection<Avatar> getAvatarOnPage(int page, int size);
 }

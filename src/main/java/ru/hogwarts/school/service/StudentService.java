@@ -25,4 +25,10 @@ public interface StudentService {
     Map<Integer, List<Student>> findStudentByAge();
 
     Collection<Student> findByAgeBetween(Integer min, Integer max);
+
+    Long getNumberAllOfStudents();
+
+    Long getAvgAge();
+
+    Collection<Student> getLastFiveStudents();
 }

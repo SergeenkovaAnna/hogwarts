@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class AvatarServiceImpl implements AvatarService {
     private final StudentService studentService;
     private final AvatarRepository avatarRepository;
 
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+
     public AvatarServiceImpl(StudentService studentService, AvatarRepository avatarRepository) {
         this.studentService = studentService;
         this.avatarRepository = avatarRepository;
@@ -39,6 +43,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("method uploadAvatar is start");
         Student student = studentService.findStudent(studentId);
         Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -61,22 +66,26 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     private String getExtensions(String fileName) {
+        logger.info("method getExtensions is start");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 
     @Override
     public Avatar findAvatar(Long studentId) {
+        logger.info("method findAvatar is start");
         return avatarRepository.findById(studentId).orElse(new  Avatar());
     }
 
     @Override
     public Collection<Avatar> getAvatarOnPage(int page, int size) {
+        logger.info("method getAvatarOnPage is start");
         PageRequest pageRequest = PageRequest.of(page - 1, size);
         return avatarRepository.findAll(pageRequest).toList();
     }
 
     private byte[] generateImagePreview(Path filePath) throws IOException {
+        logger.info("method generateImagePreview is start");
         try (InputStream is = Files.newInputStream(filePath);
         BufferedInputStream bis = new BufferedInputStream(is, 1024);
         ByteArrayOutputStream baos = new ByteArrayOutputStream()){

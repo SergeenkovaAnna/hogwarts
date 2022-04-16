@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/getPort")
 public class InfoController {
 
-    @Value("server.port = 8080")
-    private String port;
+    @Value("${server.port}")
+    private int port;
 
-    @GetMapping
-    public String getPort() {
+    @GetMapping("/port")
+    public int getPort() {
         return port;
     }
 

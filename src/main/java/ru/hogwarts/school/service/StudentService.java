@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 
 public interface StudentService {
 
@@ -28,7 +29,11 @@ public interface StudentService {
 
     Long getNumberAllOfStudents();
 
-    Long getAvgAge();
+    OptionalDouble getAvgAge();
 
     Collection<Student> getLastFiveStudents();
+
+    Collection<String> getAllStudentsNamesWhichStartWithA();
+
+
 }

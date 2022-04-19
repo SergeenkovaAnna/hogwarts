@@ -86,4 +86,14 @@ public class StudentController {
         return ResponseEntity.ok(namesStartWithA);
     }
 
+    @GetMapping("/getNameByThreads")
+    public void getStudentsNamesByThreads() {
+        studentService.getNamesByThreads();
+    }
+
+    @GetMapping("/getNamesByThreadsSynchronized")
+    public void getStudentsNamesByThreadsSynchronized() {
+        studentService.getStudentsNamesByThreadsSync();
+    }
+
 }

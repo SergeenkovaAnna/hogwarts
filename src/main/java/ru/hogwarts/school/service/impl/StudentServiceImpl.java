@@ -105,4 +105,68 @@ public class StudentServiceImpl implements StudentService {
                 .sorted()
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void getNamesByThreads() {
+        System.out.println(studentRepository.getById(1L).getId()
+                            + " "
+                            + studentRepository.getById(1L).getName());
+        System.out.println(studentRepository.getById(2L).getId()
+                + " "
+                + studentRepository.getById(2L).getName());
+
+        new Thread(() -> {
+            System.out.println(studentRepository.getById(3L).getId()
+                    + " "
+                    + studentRepository.getById(3L).getName());
+            System.out.println(studentRepository.getById(4L).getId()
+                    + " "
+                    + studentRepository.getById(4L).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentRepository.getById(6L).getId()
+                    + " "
+                    + studentRepository.getById(6L).getName());
+            System.out.println(studentRepository.getById(7L).getId()
+                    + " "
+                    + studentRepository.getById(7L).getName());
+        }).start();
+
+    }
+
+    @Override
+    public void getStudentsNamesByThreadsSync() {
+        System.out.println(studentRepository.getById(1L).getId()
+                + " "
+                + studentRepository.getById(1L).getName());
+        System.out.println(studentRepository.getById(2L).getId()
+                + " "
+                + studentRepository.getById(2L).getName());
+
+        Object flag = new Object();
+        new Thread(() -> {
+            synchronized (flag) {
+                System.out.println(studentRepository.getById(3L).getId()
+                        + " "
+                        + studentRepository.getById(3L).getName());
+                System.out.println(studentRepository.getById(4L).getId()
+                        + " "
+                        + studentRepository.getById(4L).getName());
+            }
+
+        }).start();
+
+        new Thread(() -> {
+            synchronized (flag) {
+                System.out.println(studentRepository.getById(6L).getId()
+                        + " "
+                        + studentRepository.getById(6L).getName());
+                System.out.println(studentRepository.getById(7L).getId()
+                        + " "
+                        + studentRepository.getById(7L).getName());
+            }
+
+        }).start();
+    }
 }

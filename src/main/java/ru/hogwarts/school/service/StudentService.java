@@ -35,5 +35,7 @@ public interface StudentService {
 
     Collection<String> getAllStudentsNamesWhichStartWithA();
 
+    void getNamesByThreads();
 
+    void getStudentsNamesByThreadsSync();
 }

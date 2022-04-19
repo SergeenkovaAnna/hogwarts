@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import liquibase.pro.packaged.F;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("faculty")
@@ -60,6 +62,12 @@ public class FacultyController {
     @GetMapping(value = "/name", params = {"name"})
     public ResponseEntity<Faculty> findFacultyByNameIgnoreCase(@RequestParam String name) {
         return ResponseEntity.ok(facultyService.findFacultyByNameIgnoreCase(name));
+    }
+
+    @GetMapping("/theMostLongNameByFaculty")
+    public ResponseEntity<Optional<String>> findFacultyWithTheMostLongName() {
+        Optional<String> theMostLongNameByFaculty = facultyService.getTheMostLongNameOfFaculty();
+        return ResponseEntity.ok(theMostLongNameByFaculty);
     }
 
 }

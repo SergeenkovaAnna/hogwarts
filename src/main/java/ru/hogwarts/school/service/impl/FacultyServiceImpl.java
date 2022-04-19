@@ -65,4 +65,11 @@ public class FacultyServiceImpl implements FacultyService {
         logger.info("method findFacultyByNameIgnoreCase is start");
         return facultyRepository.findFacultyByNameIgnoreCase(name);
     }
+
+    @Override
+    public Optional<String> getTheMostLongNameOfFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty :: getName)
+                .max(Comparator.comparingInt(String::length));
+    }
 }
